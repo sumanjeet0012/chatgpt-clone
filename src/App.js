@@ -26,15 +26,15 @@ function App() {
         </div>
         <div className="lowerSide">
           <div className="listItems">
-            <img src="/assets/home.svg" alt="" />
+            <img src="/assets/home.svg" alt="" className="listItemsImg" />
             Home
           </div>
           <div className="listItems">
-            <img src="/assets/bookmark.svg" alt="" />
+            <img src="/assets/bookmark.svg" alt="" className="listItemsImg" />
             Saved
           </div>
           <div className="listItems">
-            <img src="/assets/rocket.svg" alt="" />
+            <img src="/assets/rocket.svg" alt="" className="listItemsImg" />
             Upgrade to Pro
           </div>
         </div>

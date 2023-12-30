@@ -86,3 +86,27 @@ body {
   object-fit: cover;
   height: 1.75rem;
 }
+
+.lowerSide{
+  padding: 2.5rem;
+}
+
+.listItems{
+  display: flex;
+  align-items: center;
+  margin: 0.75rem;
+  font-size: 1.3rem;
+}
+
+.listItemsImg{
+  margin: 1rem;
+  padding-right: 1rem;
+}
+
+.listItems:nth-child(1){
+  margin-right: 0.5rem
+}
+
+.listItems:nth-child(3){
+  margin-left: 0.75rem
+}
