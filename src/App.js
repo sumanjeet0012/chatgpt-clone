@@ -39,7 +39,24 @@ function App() {
           </div>
         </div>
       </div>
-      <div className="main"></div>
+      <div className="main">
+        <div className="chats">
+          <div className="chat">
+            <img className="chatImg" src="/assets/user-icon.png" alt="" /><p className="txt">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Explicabo veritatis laudantium doloremque facere dolores aut alias iure minima deserunt voluptatem.</p>
+          </div>
+          <div className="chat bot">
+            <img className="chatImg" src="/assets/chatgptLogo.svg" alt="" /><p className="txt">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Incidunt quae tempore voluptates asperiores similique aliquid odit rem, ipsam qui repellat nisi eveniet explicabo minus dolorem. Nihil, similique consequatur quo illum reiciendis architecto quibusdam deleniti odit quam dolores eligendi rem iure, asperiores ex, harum placeat dolorem. Iste nam quidem maiores, ad, fugit facilis debitis iure eaque officia dolorem, quibusdam voluptas aliquam qui dolor culpa quos quas labore dolorum distinctio sed aperiam. Amet voluptas similique accusantium molestiae beatae aperiam sed nobis nihil? Quo porro et ut magnam explicabo deserunt dolorum impedit, corrupti sequi sint velit numquam repellat voluptates iste eligendi. Eligendi, eaque?</p>
+          </div>
+        </div>
+
+        <div className="chatFooter">
+          <div className="inp">
+            <input type="text" placeholder="Send a message" /> <button className="send"><img src="/assets/send.svg" alt="send" /></button>
+          </div>
+          <p>ChatGPT may produce incorrect results</p>
+        </div>
+
+      </div>
     </div>
   );
 }
