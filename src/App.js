@@ -1,6 +1,59 @@
+import { useEffect, useRef, useState } from "react";
 import "./App.css";
+import { sendMsgToOpenAI } from "./openai";
 
 function App() {
+  const msgEnd = useRef(null);
+  const [input, setInput] = useState("");
+  const [messages, setMessages] = useState([
+    {
+      text: "Hi, I am ChatGPT. I am here to help you with your queries.",
+      isBot: true,
+    },
+  ]);
+
+  useEffect(() => {
+    msgEnd.current.scrollIntoView();
+  }
+  , [messages]);
+
+  const handleEnter = async (e) => {
+    if (e.key === "Enter") {
+      await handleSend();
+    }
+  }
+
+  const handleSend = async () => {
+    const text = input;
+    setInput("");
+    setMessages([
+      ...messages,
+      { text, isBot: false },
+    ]);
+
+    const res = await sendMsgToOpenAI(input);
+    setMessages([
+      ...messages,
+      { text: text, isBot: false },
+      { text: res, isBot: true },
+    ]);
+  };
+
+  const handleQuery = async (e) => {
+    const text = e.target.value;
+    setMessages([
+      ...messages,
+      { text, isBot: false },
+    ]);
+
+    const res = await sendMsgToOpenAI(input);
+    setMessages([
+      ...messages,
+      { text: text, isBot: false },
+      { text: res, isBot: true },
+    ]);
+  }
+
   return (
     <div className="App">
       <div className="sideBar">
@@ -9,16 +62,16 @@ function App() {
             <img src="/assets/chatgpt.svg" alt="Logo" />
             <span className="brand">Chat GPT</span>
           </div>
-          <button className="midBtn">
+          <button className="midBtn" onClick={() => {window.location.reload()}} >
             <img src="/assets/add-30.png" alt="" className="addBtn" />
             New Chat
           </button>
           <div className="upperSideButton">
-            <button className="query">
+            <button className="query" onClick={handleQuery} value={"What is Programming"} >
               <img src="/assets/message.svg" alt="query" />
               What is Programming
             </button>
-            <button className="query">
+            <button className="query" onClick={handleQuery} value={"How to use an API"} >
               <img src="/assets/message.svg" alt="query" />
               How to use an API
             </button>
@@ -41,21 +94,43 @@ function App() {
       </div>
       <div className="main">
         <div className="chats">
-          <div className="chat">
-            <img className="chatImg" src="/assets/user-icon.png" alt="" /><p className="txt">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Explicabo veritatis laudantium doloremque facere dolores aut alias iure minima deserunt voluptatem.</p>
+          {/* <div className="chat">
+            <img className="chatImg" src="/assets/user-icon.png" alt="" />
+            <p className="txt">
+              Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+              Explicabo veritatis laudantium doloremque facere dolores aut alias
+              iure minima deserunt voluptatem.
+            </p>
+          </div> */}
+          
+          {messages.map((message, i) => 
+            <div key={i} className={message.isBot?"chat bot":"chat"}>
+            <img className="chatImg" src={message.isBot?"/assets/chatgptLogo.svg":"/assets/user-icon.png"} alt="" />
+            <p className="txt">
+              { message.text }
+            </p>
           </div>
-          <div className="chat bot">
-            <img className="chatImg" src="/assets/chatgptLogo.svg" alt="" /><p className="txt">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Incidunt quae tempore voluptates asperiores similique aliquid odit rem, ipsam qui repellat nisi eveniet explicabo minus dolorem. Nihil, similique consequatur quo illum reiciendis architecto quibusdam deleniti odit quam dolores eligendi rem iure, asperiores ex, harum placeat dolorem. Iste nam quidem maiores, ad, fugit facilis debitis iure eaque officia dolorem, quibusdam voluptas aliquam qui dolor culpa quos quas labore dolorum distinctio sed aperiam. Amet voluptas similique accusantium molestiae beatae aperiam sed nobis nihil? Quo porro et ut magnam explicabo deserunt dolorum impedit, corrupti sequi sint velit numquam repellat voluptates iste eligendi. Eligendi, eaque?</p>
-          </div>
+          )}
+          <div ref={msgEnd} />
         </div>
 
         <div className="chatFooter">
           <div className="inp">
-            <input type="text" placeholder="Send a message" /> <button className="send"><img src="/assets/send.svg" alt="send" /></button>
+            <input
+              type="text"
+              placeholder="Send a message"
+              value={input}
+              onKeyDown={handleEnter}
+              onChange={(e) => {
+                setInput(e.target.value);
+              }}
+            />{" "}
+            <button onClick={handleSend} className="send">
+              <img src="/assets/send.svg" alt="send" />
+            </button>
           </div>
           <p>ChatGPT may produce incorrect results</p>
         </div>
-
       </div>
     </div>
   );
