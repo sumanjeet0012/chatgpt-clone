@@ -1,14 +1,25 @@
-import OpenAI from "openai";
+import React from 'react'
+const { GoogleGenerativeAI } = require("@google/generative-ai");
 
-const openai = new OpenAI({apiKey: process.env.REACT_APP_OPENAI_API_KEY,dangerouslyAllowBrowser: true});
 
 
-export async function sendMsgToOpenAI(message) {
+const SendMsgToOpenAI = async (prompt) => {
+  const genAI = new GoogleGenerativeAI(process.env.REACT_APP_OPENAI_API_KEY);
+  console.log("genAI",genAI);
+  console.log("api key",process.env.REACT_APP_OPENAI_API_KEY);
 
-  const res = await openai.chat.completions.create({
-    messages: [{ role: "system", content: "You are a helpful assistant." }],
-    model: "gpt-3.5-turbo",
-  });
+  // For text-only input, use the gemini-pro model
+  const model = genAI.getGenerativeModel({ model: "gemini-pro"});
 
-  return res.data.choices[0].text;
+  // const prompt = "Write a story about a magic backpack."
+  console.log("prompt",prompt);
+
+  const result = await model.generateContent(prompt);
+  const response = await result.response;
+  const text = response.text();
+  console.log(text);
+  return text;
+
 }
+
+export default SendMsgToOpenAI

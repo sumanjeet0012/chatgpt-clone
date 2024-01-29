@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import "./App.css";
-import { sendMsgToOpenAI } from "./openai";
+import SendMsgToOpenAI  from "./openai";
 
 function App() {
   const msgEnd = useRef(null);
@@ -31,7 +31,7 @@ function App() {
       { text, isBot: false },
     ]);
 
-    const res = await sendMsgToOpenAI(input);
+    const res = await SendMsgToOpenAI(input);
     setMessages([
       ...messages,
       { text: text, isBot: false },
@@ -46,7 +46,7 @@ function App() {
       { text, isBot: false },
     ]);
 
-    const res = await sendMsgToOpenAI(input);
+    const res = await SendMsgToOpenAI(input);
     setMessages([
       ...messages,
       { text: text, isBot: false },
